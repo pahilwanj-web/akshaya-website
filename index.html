@@ -35,6 +35,9 @@
         @keyframes fadeInZoom { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .animate-modal { animation: fadeInZoom 0.2s ease-out forwards; }
     </style>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 </head>
 <body class="bg-slate-50 font-sans selection:bg-teal-200 selection:text-teal-900">
 
@@ -573,6 +576,21 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        // --- FIREBASE SETUP ---
+        // REPLACE THIS BLOCK WITH THE KEYS FROM FIREBASE STEP 3
+        const firebaseConfig = {
+            apiKey: "AIzaSyBbkzRE91tf0BRBfnV6dpRCJ2ZEN2eBAjQ",
+  authDomain: "akshaya-healing.firebaseapp.com",
+  projectId: "akshaya-healing",
+  storageBucket: "akshaya-healing.firebasestorage.app",
+  messagingSenderId: "1037728911958",
+  appId: "1:1037728911958:web:0a7a954603e48e3082e1f7"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
         // Set Year
         document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -580,7 +598,7 @@
         let currentUser = null;
         let sessions = 0;
 
-        // Elements
+        // ... (rest of your existing logic remains the same)
         const modal = document.getElementById('register-modal');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileMenuIcon = document.getElementById('mobile-menu-icon');
@@ -607,19 +625,30 @@
         function openModal() { modal.classList.remove('hidden'); }
         function closeModal() { modal.classList.add('hidden'); }
 
-        function handleRegister(e) {
+        async function handleRegister(e) {
             e.preventDefault();
             const btn = document.getElementById('submit-btn');
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Creating...';
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Saving to Database...';
             btn.disabled = true;
 
-            setTimeout(() => {
-                const name = document.getElementById('reg-name').value;
-                const email = document.getElementById('reg-email').value;
-                const mobile = document.getElementById('reg-mobile').value;
-                const dob = document.getElementById('reg-dob').value;
-                const goal = document.getElementById('reg-goal').value;
-                
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const mobile = document.getElementById('reg-mobile').value;
+            const dob = document.getElementById('reg-dob').value;
+            const goal = document.getElementById('reg-goal').value;
+
+            try {
+                // Save data to Firebase Firestore Database
+                await db.collection("users").add({
+                    name: name,
+                    email: email,
+                    mobile: mobile,
+                    dob: dob,
+                    goal: goal,
+                    registeredAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    totalSessions: 0
+                });
+
                 currentUser = { 
                     name: name, 
                     email: email, 
@@ -637,7 +666,13 @@
                 
                 // Scroll to dashboard
                 document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
-            }, 800);
+                
+            } catch (error) {
+                console.error("Error saving to database: ", error);
+                alert("Database connection failed. Have you replaced the YOUR_API_KEY placeholders in the code yet?");
+                btn.innerHTML = 'Create Free Profile';
+                btn.disabled = false;
+            }
         }
 
         function logout() {
