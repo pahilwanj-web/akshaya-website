@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akshaya Numerology and Healing Solutions</title>
+    
+    <!-- Tailwind CSS for Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        teal: { 50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a' },
+                        emerald: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 500: '#10b981', 600: '#059669' }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Smooth transitions for interactive elements */
+        .faq-content { transition: max-height 0.3s ease-out, opacity 0.3s ease-out; max-height: 0; opacity: 0; overflow: hidden; }
+        .faq-content.open { max-height: 500px; opacity: 1; }
+        .rotate-icon { transform: rotate(180deg); }
+        .transition-transform { transition: transform 0.3s ease; }
+        /* Modal Animation */
+        @keyframes fadeInZoom { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .animate-modal { animation: fadeInZoom 0.2s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans selection:bg-teal-200 selection:text-teal-900">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm border-b border-teal-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <div class="bg-teal-600 p-2 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles text-white text-xl"></i>
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <span class="font-extrabold text-xl md:text-2xl text-teal-900 tracking-tight leading-none">Akshaya</span>
+                        <span class="text-[9px] md:text-[10px] text-teal-600 font-bold tracking-widest uppercase mt-1">Numerology & Healing</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">About</a>
+                    <a href="#history" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">History</a>
+                    <a href="#process" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">The Process</a>
+                    <a href="#benefits" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">Solutions</a>
+                    <a href="#faq" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">FAQ</a>
+                    
+                    <!-- Logged Out State -->
+                    <div id="nav-logged-out" class="block">
+                        <button onclick="openModal()" class="bg-teal-600 text-white px-5 py-2.5 rounded-full font-medium hover:bg-teal-700 transition-all shadow-sm shadow-teal-200 hover:-translate-y-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-user text-sm"></i> Register / Sign In
+                        </button>
+                    </div>
+                    
+                    <!-- Logged In State (Hidden by default) -->
+                    <div id="nav-logged-in" class="hidden items-center gap-4 border-l pl-6 border-slate-200">
+                        <div class="flex items-center gap-2 text-teal-700 font-medium">
+                            <div id="user-initial" class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold uppercase">A</div>
+                            <span id="user-greeting">Hi, User</span>
+                        </div>
+                        <button onclick="logout()" class="text-slate-400 hover:text-red-500 transition-colors bg-slate-50 p-2 rounded-full hover:bg-red-50" title="Logout">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-slate-600 hover:text-teal-600 focus:outline-none text-2xl">
+                        <i id="mobile-menu-icon" class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-teal-100 px-4 pt-2 pb-6 space-y-2 shadow-lg absolute w-full left-0">
+            <a href="#about" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-slate-700 hover:text-teal-600 hover:bg-teal-50 rounded-md">About</a>
+            <a href="#history" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-slate-700 hover:text-teal-600 hover:bg-teal-50 rounded-md">History</a>
+            <a href="#process" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-slate-700 hover:text-teal-600 hover:bg-teal-50 rounded-md">The Process</a>
+            <a href="#benefits" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-slate-700 hover:text-teal-600 hover:bg-teal-50 rounded-md">Solutions</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-slate-700 hover:text-teal-600 hover:bg-teal-50 rounded-md">FAQ</a>
+            
+            <div class="pt-4 border-t border-slate-100">
+                <!-- Mobile Logged Out -->
+                <div id="mobile-logged-out">
+                    <button onclick="openModal(); toggleMobileMenu()" class="block w-full text-center bg-teal-600 text-white px-5 py-3 rounded-md font-medium hover:bg-teal-700">
+                        Register / Sign In
+                    </button>
+                </div>
+                <!-- Mobile Logged In -->
+                <div id="mobile-logged-in" class="hidden space-y-3">
+                    <div class="px-3 py-2 text-teal-700 font-medium flex items-center gap-2 bg-teal-50 rounded-md">
+                        <i class="fa-solid fa-user text-teal-600"></i>
+                        <span id="mobile-user-greeting">Welcome back</span>
+                    </div>
+                    <button onclick="logout(); toggleMobileMenu()" class="w-full text-left px-3 py-3 text-red-500 font-medium hover:bg-red-50 rounded-md flex items-center gap-2">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <div class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-gradient-to-br from-teal-50 via-white to-emerald-50">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+            <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-teal-200/20 blur-3xl"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-200/20 blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <span class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-teal-100 text-teal-800 text-sm font-semibold tracking-wide mb-6 animate-pulse">
+                    <i class="fa-solid fa-star text-xs"></i> Welcome to Akshaya
+                </span>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 tracking-tight mb-8">
+                    Align Your Path & Heal with <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-600">Akshaya Numerology & Healing Solutions</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-slate-600 mb-10 leading-relaxed max-w-3xl mx-auto">
+                    Discover your life's true numbers and restore emotional balance. We combine the insights of Numerology with the revolutionary Emotional Freedom Technique (EFT) to help you overcome stress, trauma, and limiting beliefs.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button id="hero-cta-out" onclick="openModal()" class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-full text-white bg-teal-600 hover:bg-teal-700 shadow-lg shadow-teal-200 transition-all transform hover:-translate-y-1">
+                        Join for Free to Track Progress <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                    <a id="hero-cta-in" href="#dashboard" class="hidden inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-full text-white bg-teal-600 hover:bg-teal-700 shadow-lg shadow-teal-200 transition-all transform hover:-translate-y-1">
+                        Go to My Dashboard <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="#about" class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-full text-teal-700 bg-white border-2 border-teal-100 hover:border-teal-300 hover:bg-teal-50 transition-all">
+                        Discover Our Method
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD SECTION (Hidden by default) -->
+    <section id="dashboard" class="py-20 lg:py-28 bg-teal-50 hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Your Wellness Dashboard</h2>
+                <p class="text-lg text-slate-600">Track your EFT journey and celebrate your progress.</p>
+                <div class="w-24 h-1 bg-teal-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-6">
+                <!-- Welcome Card -->
+                <div class="md:col-span-2 bg-white rounded-3xl p-8 shadow-sm border border-teal-100 flex flex-col justify-center relative overflow-hidden">
+                    <div class="absolute top-[-20%] right-[-10%] w-[50%] h-[150%] bg-teal-50/50 rounded-full blur-2xl pointer-events-none"></div>
+                    <h3 id="dash-greeting" class="text-2xl font-bold text-slate-900 mb-2 relative z-10">Welcome back!</h3>
+                    <p id="dash-goal" class="text-slate-600 mb-6 relative z-10">Consistency is key in EFT. Remember to log your sessions here after you tap.</p>
+                    <button id="log-session-btn" onclick="logSession()" class="self-start inline-flex items-center px-6 py-3 font-medium rounded-full transition-all shadow-md bg-teal-600 text-white hover:bg-teal-700 shadow-teal-200">
+                        <i id="log-icon" class="fa-solid fa-circle-check mr-2"></i> 
+                        <span id="log-text">Log Today's Session</span>
+                    </button>
+                </div>
+
+                <!-- Stats Card -->
+                <div class="bg-gradient-to-br from-teal-600 to-emerald-600 rounded-3xl p-8 shadow-md text-white flex flex-col items-center justify-center text-center transform transition-transform hover:scale-105">
+                    <i class="fa-solid fa-award text-4xl text-teal-200 mb-4"></i>
+                    <div id="dash-count" class="text-6xl font-black mb-2 tracking-tighter">0</div>
+                    <div class="text-teal-100 font-medium">Total Sessions<br/>Completed</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-20 lg:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">What is Akshaya Healing?</h2>
+                <p class="text-lg text-slate-600">A holistic bridge between ancient numerology and modern energy psychology.</p>
+                <div class="w-24 h-1 bg-teal-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-lg text-slate-700 leading-relaxed">
+                    <p>At <strong>Akshaya Numerology and Healing Solutions</strong>, we believe in a holistic approach to your life's journey. While Numerology helps you deeply understand your life path and core numbers, our healing solutions—primarily the Emotional Freedom Technique (EFT)—empower you to clear the emotional blocks holding you back.</p>
+                    <p>EFT operates on the premise that unresolved emotional trauma contributes to physical disease and mental distress. By tapping on specific meridian points on the body while focusing on a specific issue, EFT clears the "short circuit" in the body's energy system.</p>
+                    <div class="bg-teal-50 border-l-4 border-teal-500 p-6 rounded-r-xl">
+                        <p class="font-medium text-teal-900 italic">"Understand your path through numbers, clear the obstacles through tapping."</p>
+                        <p class="text-sm text-teal-700 mt-2">— Akshaya Healing Solutions</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                        <div class="bg-blue-100 p-4 rounded-full mb-4 text-blue-600">
+                            <i class="fa-solid fa-brain text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-2">Psychological</h3>
+                        <p class="text-sm text-slate-600">Combines cognitive therapy and exposure therapy elements to rewire thought patterns.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-300 mt-8">
+                        <div class="bg-emerald-100 p-4 rounded-full mb-4 text-emerald-600">
+                            <i class="fa-solid fa-bolt text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-2">Somatic</h3>
+                        <p class="text-sm text-slate-600">Engages the body physically through touch to release deeply trapped stress.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HISTORY SECTION -->
+    <section id="history" class="py-20 lg:py-28 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">The Evolution of EFT</h2>
+                <p class="text-lg text-slate-600">From ancient energy meridians to modern clinical applications.</p>
+                <div class="w-24 h-1 bg-teal-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto relative border-l-2 border-teal-200 pl-8 space-y-12">
+                <div class="relative group">
+                    <div class="absolute -left-[41px] bg-teal-500 rounded-full w-8 h-8 flex items-center justify-center border-4 border-slate-50 group-hover:scale-125 transition-transform group-hover:bg-teal-600">
+                        <i class="fa-solid fa-clock-rotate-left text-white text-xs"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">Ancient Origins</h3>
+                    <p class="text-slate-600">EFT's foundation lies in Traditional Chinese Medicine (TCM), specifically the concept of energy meridians flowing through the body, established over 5,000 years ago.</p>
+                </div>
+                <div class="relative group">
+                    <div class="absolute -left-[41px] bg-teal-500 rounded-full w-8 h-8 flex items-center justify-center border-4 border-slate-50 group-hover:scale-125 transition-transform group-hover:bg-teal-600">
+                        <i class="fa-solid fa-clock-rotate-left text-white text-xs"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">1980s: Thought Field Therapy</h3>
+                    <p class="text-slate-600">Dr. Roger Callahan discovered that tapping on acupressure points while a patient focused on a phobia yielded rapid relief. He developed TFT, which required complex algorithms.</p>
+                </div>
+                <div class="relative group">
+                    <div class="absolute -left-[41px] bg-teal-500 rounded-full w-8 h-8 flex items-center justify-center border-4 border-slate-50 group-hover:scale-125 transition-transform group-hover:bg-teal-600">
+                        <i class="fa-solid fa-clock-rotate-left text-white text-xs"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">1995: The Birth of EFT</h3>
+                    <p class="text-slate-600">Gary Craig, an engineer, simplified TFT. He realized that tapping all major meridian points in a single sequence worked for almost every issue, democratizing the technique.</p>
+                </div>
+                <div class="relative group">
+                    <div class="absolute -left-[41px] bg-teal-500 rounded-full w-8 h-8 flex items-center justify-center border-4 border-slate-50 group-hover:scale-125 transition-transform group-hover:bg-teal-600">
+                        <i class="fa-solid fa-clock-rotate-left text-white text-xs"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">Present Day: Validation</h3>
+                    <p class="text-slate-600">Today, Clinical EFT is an evidence-based practice supported by over 100 peer-reviewed medical and psychology journals. It is utilized by therapists worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS SECTION -->
+    <section id="process" class="py-20 lg:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">The Tapping Process</h2>
+                <p class="text-lg text-slate-600">The standard EFT Basic Recipe involves 5 clear steps.</p>
+                <div class="w-24 h-1 bg-teal-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- Steps -->
+                <div class="space-y-6">
+                    <div class="flex gap-4 p-4 rounded-2xl hover:bg-teal-50/50 transition-colors border border-transparent hover:border-teal-100">
+                        <div class="flex-shrink-0 w-10 h-10 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center font-bold text-lg shadow-sm">1</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-900 mb-1">Identify the Issue</h4>
+                            <p class="text-slate-600 text-sm">Choose a specific problem to focus on. Be as specific as possible (e.g., 'My fear of the upcoming presentation').</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 p-4 rounded-2xl hover:bg-teal-50/50 transition-colors border border-transparent hover:border-teal-100">
+                        <div class="flex-shrink-0 w-10 h-10 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center font-bold text-lg shadow-sm">2</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-900 mb-1">Test Initial Intensity</h4>
+                            <p class="text-slate-600 text-sm">Rate the intensity of your problem on a scale from 0 to 10. This serves as a benchmark.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 p-4 rounded-2xl hover:bg-teal-50/50 transition-colors border border-transparent hover:border-teal-100">
+                        <div class="flex-shrink-0 w-10 h-10 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center font-bold text-lg shadow-sm">3</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-900 mb-1">The Setup</h4>
+                            <p class="text-slate-600 text-sm">While continuously tapping the Karate Chop point, repeat: 'Even though I have this [issue], I deeply and completely accept myself.' (3 times)</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 p-4 rounded-2xl hover:bg-teal-50/50 transition-colors border border-transparent hover:border-teal-100">
+                        <div class="flex-shrink-0 w-10 h-10 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center font-bold text-lg shadow-sm">4</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-900 mb-1">The Sequence</h4>
+                            <p class="text-slate-600 text-sm">Tap on each of the 8 meridian points about 5-7 times each, while repeating a brief 'reminder phrase' (e.g., 'This presentation anxiety').</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 p-4 rounded-2xl hover:bg-teal-50/50 transition-colors border border-transparent hover:border-teal-100">
+                        <div class="flex-shrink-0 w-10 h-10 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center font-bold text-lg shadow-sm">5</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-900 mb-1">Test Intensity Again</h4>
+                            <p class="text-slate-600 text-sm">Rate your problem again from 0 to 10. Repeat the process until the intensity drops to 0 or a manageable level.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tapping Points Grid -->
+                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200 shadow-sm h-fit sticky top-24">
+                    <h3 class="text-xl font-bold text-slate-900 mb-6 text-center border-b border-slate-200 pb-4">The Tapping Points Guide</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 flex items-center gap-3 hover:border-teal-300 transition-colors cursor-pointer group">
+                            <div class="text-2xl bg-teal-50 p-2 rounded-lg group-hover:bg-teal-100 transition-colors">✋</div>
+                            <div>
+                                <h5 class="font-bold text-slate-800 text-sm leading-tight">Karate Chop (KC)</h5>
+                                <p class="text-xs text-slate-500 mt-0.5 line-clamp-1 group-hover:line-clamp-none transition-all">Outside of the hand.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 flex items-center gap-3 hover:border-teal-300 transition-colors cursor-pointer group">
+                            <div class="text-2xl bg-teal-50 p-2 rounded-lg group-hover:bg-teal-100 transition-colors">💆</div>
+                            <div>
+                                <h5 class="font-bold text-slate-800 text-sm leading-tight">Top of Head (TOH)</h5>
+                                <p class="text-xs text-slate-500 mt-0.5 line-clamp-1 group-hover:line-clamp-none transition-all">Center of the top of head.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 flex items-center gap-3 hover:border-teal-300 transition-colors cursor-pointer group">
+                            <div class="text-2xl bg-teal-50 p-2 rounded-lg group-hover:bg-teal-100 transition-colors">👁️</div>
+                            <div>
+                                <h5 class="font-bold text-slate-800 text-sm leading-tight">Eyebrow (EB)</h5>
+                                <p class="text-xs text-slate-500 mt-0.5 line-clamp-1 group-hover:line-clamp-none transition-all">Inner edge of eyebrows.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 flex items-center gap-3 hover:border-teal-300 transition-colors cursor-pointer group">
+                            <div class="text-2xl bg-teal-50 p-2 rounded-lg group-hover:bg-teal-100 transition-colors">👀</div>
+                            <div>
+                                <h5 class="font-bold text-slate-800 text-sm leading-tight">Side of Eye (SE)</h5>
+                                <p class="text-xs text-slate-500 mt-0.5 line-clamp-1 group-hover:line-clamp-none transition-all">Outside of the eyes.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 flex items-center gap-3 hover:border-teal-300 transition-colors cursor-pointer group">
+                            <div class="text-2xl bg-teal-50 p-2 rounded-lg group-hover:bg-teal-100 transition-colors">👇</div>
+                            <div>
+                                <h5 class="font-bold text-slate-800 text-sm leading-tight">Under Eye (UE)</h5>
+                                <p class="text-xs text-slate-500 mt-0.5 line-clamp-1 group-hover:line-clamp-none transition-all">Under the eyes, pupil line.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 flex items-center gap-3 hover:border-teal-300 transition-colors cursor-pointer group">
+                            <div class="text-2xl bg-teal-50 p-2 rounded-lg group-hover:bg-teal-100 transition-colors">👃</div>
+                            <div>
+                                <h5 class="font-bold text-slate-800 text-sm leading-tight">Under Nose (UN)</h5>
+                                <p class="text-xs text-slate-500 mt-0.5 line-clamp-1 group-hover:line-clamp-none transition-all">Between nose and lip.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 flex items-center gap-3 hover:border-teal-300 transition-colors cursor-pointer group">
+                            <div class="text-2xl bg-teal-50 p-2 rounded-lg group-hover:bg-teal-100 transition-colors">👄</div>
+                            <div>
+                                <h5 class="font-bold text-slate-800 text-sm leading-tight">Chin (CH)</h5>
+                                <p class="text-xs text-slate-500 mt-0.5 line-clamp-1 group-hover:line-clamp-none transition-all">Crease between lip/chin.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 flex items-center gap-3 hover:border-teal-300 transition-colors cursor-pointer group">
+                            <div class="text-2xl bg-teal-50 p-2 rounded-lg group-hover:bg-teal-100 transition-colors">🦴</div>
+                            <div>
+                                <h5 class="font-bold text-slate-800 text-sm leading-tight">Collarbone (CB)</h5>
+                                <p class="text-xs text-slate-500 mt-0.5 line-clamp-1 group-hover:line-clamp-none transition-all">Junction of sternum.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 flex items-center gap-3 hover:border-teal-300 transition-colors cursor-pointer group">
+                            <div class="text-2xl bg-teal-50 p-2 rounded-lg group-hover:bg-teal-100 transition-colors">💪</div>
+                            <div>
+                                <h5 class="font-bold text-slate-800 text-sm leading-tight">Under Arm (UA)</h5>
+                                <p class="text-xs text-slate-500 mt-0.5 line-clamp-1 group-hover:line-clamp-none transition-all">4 inches below armpit.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 bg-teal-600 text-white p-4 rounded-xl text-sm font-medium text-center shadow-md">
+                        Tap firmly but gently with two fingers (index and middle finger).
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BENEFITS SECTION -->
+    <section id="benefits" class="py-20 lg:py-28 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Solutions & Results</h2>
+                <p class="text-lg text-slate-600">What can Akshaya Healing help you overcome?</p>
+                <div class="w-24 h-1 bg-teal-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-100/50 transition-all duration-300 flex flex-col">
+                    <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center mb-5"><i class="fa-solid fa-heart text-xl"></i></div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-2">Stress & Anxiety</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">Significantly lowers cortisol levels and calms an overwhelmed nervous system rapidly. Feel the heavy burden of daily stress lift.</p>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-100/50 transition-all duration-300 flex flex-col">
+                    <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center mb-5"><i class="fa-solid fa-brain text-xl"></i></div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-2">Trauma & PTSD</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">Helps process and neutralize intense negative emotional memories without needing to endlessly relive the painful events.</p>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-100/50 transition-all duration-300 flex flex-col">
+                    <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center mb-5"><i class="fa-solid fa-bolt text-xl"></i></div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-2">Physical Pain</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">Often relieves chronic pain, tension headaches, and tight shoulders by clearing the emotional blocks stored in the body.</p>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-100/50 transition-all duration-300 flex flex-col">
+                    <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center mb-5"><i class="fa-solid fa-wand-magic-sparkles text-xl"></i></div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-2">Phobias & Fears</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">Highly effective at collapsing irrational fears like public speaking, flying, or heights by rewiring the brain's alarm response.</p>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-100/50 transition-all duration-300 flex flex-col">
+                    <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center mb-5"><i class="fa-solid fa-circle-check text-xl"></i></div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-2">Cravings & Weight</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">Addresses the deep emotional root causes of binge eating and food cravings, helping you build a healthier relationship with food.</p>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-100/50 transition-all duration-300 flex flex-col">
+                    <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center mb-5"><i class="fa-solid fa-clock-rotate-left text-xl"></i></div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-2">Limiting Beliefs</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">Clears subconscious blocks related to money, self-worth, and imposter syndrome, allowing you to finally reach your true potential.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section id="faq" class="py-20 lg:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h2>
+                <div class="w-24 h-1 bg-teal-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+            
+            <div class="max-w-3xl mx-auto space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white hover:border-teal-200 transition-colors">
+                    <button class="faq-btn w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-bold text-lg text-slate-800 pr-4">Does EFT actually work, or is it a placebo?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-content px-6">
+                        <p class="text-slate-600 pt-2 pb-5 border-t border-slate-100 leading-relaxed">
+                            Numerous peer-reviewed studies show EFT is effective for anxiety, depression, and PTSD. It works by sending calming signals to the amygdala (the brain's stress center), physically reducing cortisol levels rather than just acting as a placebo.
+                        </p>
+                    </div>
+                </div>
+                <!-- FAQ Item 2 -->
+                <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white hover:border-teal-200 transition-colors">
+                    <button class="faq-btn w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-bold text-lg text-slate-800 pr-4">How does Numerology fit with EFT Tapping?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-content px-6">
+                        <p class="text-slate-600 pt-2 pb-5 border-t border-slate-100 leading-relaxed">
+                            Numerology provides profound insights into your life path, core personality, and inherent challenges. Once you understand the energetic blocks revealed by your numbers, EFT Tapping is the practical tool we use to clear those specific emotional blocks and align you with your true potential.
+                        </p>
+                    </div>
+                </div>
+                <!-- FAQ Item 3 -->
+                <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white hover:border-teal-200 transition-colors">
+                    <button class="faq-btn w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-bold text-lg text-slate-800 pr-4">How long does it take to see results?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-content px-6">
+                        <p class="text-slate-600 pt-2 pb-5 border-t border-slate-100 leading-relaxed">
+                            Many people experience a reduction in stress or pain intensity within the first few minutes of a single tapping session. However, deeper, complex traumas may require consistent tapping over weeks or months, ideally with a certified practitioner.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-300 py-12 border-t-4 border-teal-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <i class="fa-solid fa-wand-magic-sparkles text-teal-400 text-xl"></i>
+                        <div class="flex flex-col justify-center">
+                            <span class="font-extrabold text-xl text-white tracking-tight leading-none">Akshaya</span>
+                            <span class="text-[10px] text-teal-400 font-bold tracking-widest uppercase mt-1">Numerology & Healing</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-400 max-w-xs mt-4">
+                        Empowering individuals with the knowledge of numbers and the tools of energy psychology to achieve emotional freedom and wellness.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#about" class="hover:text-teal-400 transition-colors">About Us</a></li>
+                        <li><a href="#process" class="hover:text-teal-400 transition-colors">How to Tap</a></li>
+                        <li><a href="#history" class="hover:text-teal-400 transition-colors">History of EFT</a></li>
+                        <li><a href="#faq" class="hover:text-teal-400 transition-colors">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Medical Disclaimer</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed bg-slate-800 p-4 rounded-lg border border-slate-700">
+                        The information provided by Akshaya Numerology and Healing Solutions is for educational purposes only and is not intended as a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or qualified health provider.
+                    </p>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-slate-800 text-center text-sm text-slate-500">
+                <p>&copy; <span id="year"></span> Akshaya Numerology and Healing Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- REGISTRATION MODAL -->
+    <div id="register-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto animate-modal">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 bg-slate-100 rounded-full p-1 w-8 h-8 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-wand-magic-sparkles text-teal-600 text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Start Your Healing Journey</h2>
+                <p class="text-slate-600 mt-2">Register with Akshaya to track your daily tapping sessions.</p>
+            </div>
+
+            <form id="reg-form" onsubmit="handleRegister(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+                    <input id="reg-name" required type="text" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition-all" placeholder="e.g. Jane Doe">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
+                    <input required type="email" id="reg-email" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition-all" placeholder="jane@example.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Mobile Number</label>
+                    <input required type="tel" id="reg-mobile" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition-all" placeholder="e.g. +1 234 567 8900">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Date of Birth (Optional)</label>
+                    <input type="date" id="reg-dob" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition-all text-slate-700 bg-white">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Primary Goal (Optional)</label>
+                    <select id="reg-goal" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition-all bg-white">
+                        <option value="">Select a goal...</option>
+                        <option value="Reduce Anxiety & Stress">Reduce Anxiety & Stress</option>
+                        <option value="Manage Physical Pain">Manage Physical Pain</option>
+                        <option value="Heal from Past Trauma">Heal from Past Trauma</option>
+                        <option value="Improve Sleep Quality">Improve Sleep Quality</option>
+                        <option value="Understand My Life Path">Understand My Life Path</option>
+                        <option value="General Emotional Wellness">General Emotional Wellness</option>
+                    </select>
+                </div>
+                
+                <button type="submit" id="submit-btn" class="w-full mt-6 bg-teal-600 text-white font-bold py-3.5 px-4 rounded-xl hover:bg-teal-700 transition-colors shadow-md flex items-center justify-center">
+                    Create Free Profile
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Set Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // State
+        let currentUser = null;
+        let sessions = 0;
+
+        // Elements
+        const modal = document.getElementById('register-modal');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+        const dashboard = document.getElementById('dashboard');
+        const navLoggedOut = document.getElementById('nav-logged-out');
+        const navLoggedIn = document.getElementById('nav-logged-in');
+        const mobileLoggedOut = document.getElementById('mobile-logged-out');
+        const mobileLoggedIn = document.getElementById('mobile-logged-in');
+        const heroCtaOut = document.getElementById('hero-cta-out');
+        const heroCtaIn = document.getElementById('hero-cta-in');
+
+        // Functions
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenuIcon.classList.remove('fa-xmark');
+                mobileMenuIcon.classList.add('fa-bars');
+            } else {
+                mobileMenuIcon.classList.remove('fa-bars');
+                mobileMenuIcon.classList.add('fa-xmark');
+            }
+        }
+
+        function openModal() { modal.classList.remove('hidden'); }
+        function closeModal() { modal.classList.add('hidden'); }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Creating...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                const name = document.getElementById('reg-name').value;
+                const email = document.getElementById('reg-email').value;
+                const mobile = document.getElementById('reg-mobile').value;
+                const dob = document.getElementById('reg-dob').value;
+                const goal = document.getElementById('reg-goal').value;
+                
+                currentUser = { 
+                    name: name, 
+                    email: email, 
+                    mobile: mobile, 
+                    dob: dob, 
+                    goal: goal 
+                };
+                sessions = 0;
+                
+                updateUI();
+                closeModal();
+                
+                btn.innerHTML = 'Create Free Profile';
+                btn.disabled = false;
+                
+                // Scroll to dashboard
+                document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
+            }, 800);
+        }
+
+        function logout() {
+            currentUser = null;
+            updateUI();
+        }
+
+        function logSession() {
+            sessions++;
+            document.getElementById('dash-count').innerText = sessions;
+            
+            const btn = document.getElementById('log-session-btn');
+            const icon = document.getElementById('log-icon');
+            const text = document.getElementById('log-text');
+            
+            btn.classList.remove('bg-teal-600', 'hover:bg-teal-700', 'shadow-teal-200');
+            btn.classList.add('bg-emerald-500', 'shadow-emerald-200');
+            text.innerText = 'Session Logged!';
+            
+            setTimeout(() => {
+                btn.classList.add('bg-teal-600', 'hover:bg-teal-700', 'shadow-teal-200');
+                btn.classList.remove('bg-emerald-500', 'shadow-emerald-200');
+                text.innerText = "Log Today's Session";
+            }, 2000);
+        }
+
+        function updateUI() {
+            if (currentUser) {
+                const firstName = currentUser.name.split(' ')[0];
+                const initial = firstName.charAt(0);
+
+                // Update Nav
+                navLoggedOut.classList.add('hidden');
+                navLoggedOut.classList.remove('block');
+                navLoggedIn.classList.remove('hidden');
+                navLoggedIn.classList.add('flex');
+                document.getElementById('user-initial').innerText = initial;
+                document.getElementById('user-greeting').innerText = `Hi, ${firstName}`;
+
+                // Update Mobile
+                mobileLoggedOut.classList.add('hidden');
+                mobileLoggedIn.classList.remove('hidden');
+                document.getElementById('mobile-user-greeting').innerText = `Welcome back, ${firstName}`;
+
+                // Update Hero
+                heroCtaOut.classList.add('hidden');
+                heroCtaOut.classList.remove('inline-flex');
+                heroCtaIn.classList.remove('hidden');
+                heroCtaIn.classList.add('inline-flex');
+
+                // Update Dashboard
+                dashboard.classList.remove('hidden');
+                document.getElementById('dash-greeting').innerText = `Welcome back, ${firstName}!`;
+                document.getElementById('dash-goal').innerText = currentUser.goal 
+                    ? `You are focusing on: ${currentUser.goal.toUpperCase()}. Consistent tapping brings the best results.`
+                    : "Consistency is key in EFT. Remember to log your sessions here after you tap.";
+                document.getElementById('dash-count').innerText = sessions;
+
+            } else {
+                // Revert to Logged out state
+                navLoggedOut.classList.remove('hidden');
+                navLoggedOut.classList.add('block');
+                navLoggedIn.classList.add('hidden');
+                navLoggedIn.classList.remove('flex');
+                
+                mobileLoggedOut.classList.remove('hidden');
+                mobileLoggedIn.classList.add('hidden');
+
+                heroCtaOut.classList.remove('hidden');
+                heroCtaOut.classList.add('inline-flex');
+                heroCtaIn.classList.add('hidden');
+                heroCtaIn.classList.remove('inline-flex');
+
+                dashboard.classList.add('hidden');
+            }
+        }
+
+        // Accordion Logic
+        const faqBtns = document.querySelectorAll('.faq-btn');
+        faqBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                // Close others
+                document.querySelectorAll('.faq-content').forEach(el => {
+                    if (el !== content) {
+                        el.classList.remove('open');
+                        el.previousElementSibling.querySelector('i').classList.remove('text-teal-600', 'rotate-icon');
+                    }
+                });
+
+                // Toggle current
+                content.classList.toggle('open');
+                if(content.classList.contains('open')) {
+                    icon.classList.add('text-teal-600', 'rotate-icon');
+                } else {
+                    icon.classList.remove('text-teal-600', 'rotate-icon');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
